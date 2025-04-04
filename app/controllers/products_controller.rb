@@ -7,9 +7,9 @@ class ProductsController < ApplicationController
       product.instance_variable_set(:@review_percentages, product.review_percentages)
     end
     # Debugging logs
-    Rails.logger.debug "Min Price: #{params[:min_price]}"
-    Rails.logger.debug "Max Price: #{params[:max_price]}"
-    # Price filtering logic
+    # Rails.logger.debug "Min Price: #{params[:min_price]}"
+    # Rails.logger.debug "Max Price: #{params[:max_price]}"
+    # Price filtering logic 
     if params[:min_price].present? && params[:max_price].present?
       min_price = params[:min_price].to_f
       max_price = params[:max_price].to_f
