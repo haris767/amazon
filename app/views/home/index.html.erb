@@ -1,0 +1,77 @@
+<div class="container mx-auto p-6">
+  <!-- Hero Banner -->
+  <div class="relative bg-pink-200 p-6 rounded-lg flex items-center">
+    <div>
+      <h1 class="text-3xl font-bold">Beauty Products</h1>
+      <p class="text-gray-700">Explore top sellers</p>
+    </div>
+    
+      <div class="swiper" style="height:250px;">
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <%# property.images.each do |image| %>
+            <!-- Slides -->
+             <%= image_tag 'banner.jpg', class: '' %>
+             <%= image_tag 'banner2.jpg', class: '' %>
+            <%#= image_tag image, id: "property-image", class:'swiper-slide',
+                  style: "cursor: pointer;  border-radius: 8px;"%>
+            <%#end%>
+            
+          <!------swiper-wrapper-------->
+          </div>
+        <!-- If we need navigation buttons -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+         
+        <!-------swiper---------------->
+        </div> 
+  
+
+  <!-- Navigation Buttons -->
+  <div class="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 bg-gray-800 p-2 rounded-full text-white"></div>
+  <div class="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 bg-gray-800 p-2 rounded-full text-white"></div>
+
+  <!-- Pagination -->
+  <div class="swiper-pagination absolute bottom-4 left-1/2 -translate-x-1/2"></div>
+</div>
+
+    
+
+  </div>
+
+  <!-- Category Grid -->
+  
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
+    <% @categories.each do |category| %>
+   
+      <div class="bg-white shadow-lg rounded-lg p-4">
+        <h2 class="font-semibold text-lg"><%= category.name %></h2>
+       <!--------category.image_url-------->
+       
+       <div class="grid grid-cols-2 gap-4 mt-2">
+      <% category.subcategories.limit(4).each do |sub| %>
+      
+     <div class="flex flex-col items-center">
+
+            <!-- Slides -->
+              <% if sub.image.attached? %> 
+             <%= image_tag sub.image, class: "w-32 h-32 object-cover" %>
+            <% else %>
+              <p>No image available</p>
+            <% end %>
+              <%= link_to subcategory_products_path(sub) do%>
+             <p><%= sub.name %></p>
+             <%end%>
+    </div>
+    
+   <% end %>
+   </div>
+   <% if category.subcategories.count > 4%>
+    <%= link_to "See more", category_subcategories_path(category), class: "text-blue-500 hover:underline block mt-2" %>
+   <%end%>
+      </div>
+      <% end %>
+    
+  </div>
+  
+</div>

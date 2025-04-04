@@ -1,0 +1,82 @@
+<div class="mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
+  <%= render 'shared/owner_sidebar' %>
+  
+  <main>
+    <div class="px-8 py-8 border rounded-md lg:flex-auto my-8">
+   <h2 class="text-base font-semibold leading-7 text-gray-900">Product Images</h2>
+<div class="mt-2 flex flex-wrap gap-2">
+  <% @product.images.each do |image| %>
+    <div class="relative w-40 h-40">
+      <%= image_tag image, class: 'w-40 h-40 object-cover rounded-md' %>
+      <div class="text-center mt-1">
+        <%= button_to remove_image_owner_product_path(image_id: image.id), method: :delete, class: "save-btn text-sm text-red-600 font-semibold hover:underline" do %>
+          Remove
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= form_with model: @product, url: add_images_owner_product_path, multipart: true, class:'mt-6' do |f| %>
+  <div>
+    <div>
+      <%= f.label 'Add Images', class:'block text-base font-semibold leading-7 text-gray-900 mb-2' %>
+      <%= f.file_field :images, multiple: true, class:'font-medium' %>
+    </div>
+
+    <%= f.submit "Upload Images", class:"save-btn cursor-pointer mt-2 flex items-center justify-center rounded-md" %>
+  </div>
+<% end %>
+
+
+    <%= render 'owner/products/form', path: owner_product_path %>
+
+   
+    <div class="px-8 py-8 border rounded-md lg:flex-auto my-8">
+      <div>
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Sizes</h2>
+<%= form_with model: @product, url: update_sizes_owner_product_path, method: :patch, class: 'mt-6' do |f| %>
+  <div class="mt-6 grid grid-cols-1 md:grid-cols-2">
+    <% Size.all.each do |size| %>
+      <div class="flex items-center gap-2">
+        <%= f.check_box :size_ids, { multiple: true, checked: @product.sizes.include?(size) }, size.id, nil %>
+        <%= render 'owner/products/edit_size_item', size: size %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-span-full">
+    <%= f.submit "Save", class:"save-btn cursor-pointer mt-2 flex items-center justify-center rounded-md " %>
+  </div>
+<% end %>
+      </div>
+    </div>
+
+    <div class="px-8 py-8 border rounded-md lg:flex-auto my-8">
+      <div>
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Styles</h2>
+
+     <%= form_with model: @product, url: update_styles_owner_product_path, method: :patch, class: 'mt-6' do |f| %>
+  <div class="mt-6 grid grid-cols-1 md:grid-cols-2">
+    <% Style.all.each do |style| %>
+      <div class="flex items-center gap-2">
+        <%= f.check_box :style_ids, { multiple: true, checked: @product.styles.include?(style) }, style.id, nil %>
+        <%= render 'owner/products/edit_style_item', style: style %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-span-full">
+    <%= f.submit "Save", class:"save-btn cursor-pointer mt-2 flex items-center justify-center rounded-md " %>
+  </div>
+<% end %>
+      </div>
+    </div>
+
+    <div class="px-8 py-8 border border-red-500 rounded-md lg:flex-auto my-8">
+      <div>
+        <h2 class="text-2xl font-semibold leading-7 text-red-500">Delete product</h2>
+        <p class="my-2">This action is permanent and irreversible. Are you sure?</p>
+         <%= button_to 'Delete', owner_product_path, method: :delete, class:"delete-btn mt-4 rounded p-1 bg-red-500 hover:bg-red-700 text-white px-8 py-2" %>
+      </div>
+    </div>
+  </main>
+</div>

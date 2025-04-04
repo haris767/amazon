@@ -1,0 +1,30 @@
+
+
+<!-- Star Rating & Reviews Count -->
+<div class=" items-center mt-2">
+  <!-- Stars -->
+  <div class=" text-yellow-500">
+    <% if product.average_final_rating.present? %>
+              <% full_stars = product.average_final_rating.floor %>
+              <% half_star = (product.average_final_rating.round(2) % 1) >= 0.5 %>
+              <% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %>
+              <% full_stars.times { %><span>&#9733;</span><% } %>
+              <% if half_star %><span>&#9733;&#xFE0E;</span><% end %>
+              <% empty_stars.times { %><span class="text-gray-300">&#9733;</span><% } %>
+              <%end%>
+  </div>
+
+  <!-- Reviews Count (Clickable) -->
+  <span class="text-black-600 text-sm ml-2">
+    <%= number_with_delimiter(product.reviews_count) %>
+  </span>
+</div>
+
+<!-- Reviews Modal Trigger -->
+<% if product.reviews_count > 0 %>
+  <%= render 'shared/modal',
+    modalTriggerId: "reviews_#{product.id}", # Unique ID for each product
+    content: 'products/reviews_modal', 
+    content_params: { product: product }
+  %>
+<% end %>

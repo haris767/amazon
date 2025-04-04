@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  headline: MyString
+  company_name: MyString
+  description: MyString
+  price_cents: 1
+  price_currency: MyString
+  country_code: MyString
+  size: 1
+  style: MyString
+  color: MyString
+  ear_placement: MyString
+  form_factor: MyString
+  impedance: MyString
+  reviews_count: 9.99
+  average_final_rating: 9.99
+  subcategory: one
+
+two:
+  headline: MyString
+  company_name: MyString
+  description: MyString
+  price_cents: 1
+  price_currency: MyString
+  country_code: MyString
+  size: 1
+  style: MyString
+  color: MyString
+  ear_placement: MyString
+  form_factor: MyString
+  impedance: MyString
+  reviews_count: 9.99
+  average_final_rating: 9.99
+  subcategory: two

@@ -1,0 +1,6 @@
+<h2>Order #<%= @order.id %> Tracking</h2>
+<p>Status: <%= @order.tracking_status %></p>
+<p>Carrier: <%= @order.carrier_name %></p>
+<p>Tracking Number: <%= @order.tracking_number %></p>
+
+<%= link_to "Back to Orders", orders_path %>

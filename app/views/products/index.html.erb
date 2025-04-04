@@ -1,0 +1,55 @@
+<div data-controller="filter">
+  <h2 class="text-2xl font-semibold mb-4 text-gray-900"><%= @subcategory.name %></h2>
+
+  <div class="w-full max-w-xs p-4 bg-white rounded-lg shadow-md">
+    <label class="font-semibold text-gray-800">Price</label>
+    <div class="flex justify-between text-sm font-medium text-gray-700">
+      <span data-filter-target="minPrice">$1</span>
+      <span data-filter-target="maxPrice">$180+</span>
+    </div>
+
+    <div class="relative mt-2">
+      
+      <input type="range" min="1" max="180" value="1"
+        data-action="input->filter#updatePrice change->filter#applyFilter"
+        data-filter-target="minRange"
+        class="absolute w-full h-2 bg-teal-600 rounded-lg appearance-none cursor-pointer outline-none">
+      
+      <input type="range" min="1" max="180" value="180"
+        data-action="input->filter#updatePrice change->filter#applyFilter"
+        data-filter-target="maxRange"
+        class="absolute w-full h-2 bg-teal-600 rounded-lg appearance-none cursor-pointer outline-none">
+    </div>
+
+    <button data-action="click->filter#applyFilter"
+      class="mt-4 w-full px-4 py-2 text-teal-600 border border-teal-600 rounded-lg hover:bg-teal-600 hover:text-white transition">
+      Go
+    </button>
+  </div>
+<div id="product_list">
+  <div data-filter-target="productList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <% @products.each do |product| %>
+    <%= link_to subcategory_product_path(product.subcategory, product) do%>
+      <div class="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl transition duration-300">
+        <div class="relative">
+          <% if product.images.attached? %>
+            <% image = product.images.first %>
+            <%= image_tag image, class: "w-full h-48 object-cover rounded" %>
+          <% end %>
+        </div>
+        
+        <div class="mt-4">
+          <span class="cursor-pointer text-gray-900 font-medium text-lg hover:text-blue-600">
+            <%= product.headline %>
+          </span>
+           <% end %>
+          <!----------render reviews in index page of products--------------->
+            <%= render :partial => 'products/reviews', :locals => {:product => product,:style=>@style}%>
+          </div>
+      </div>
+      <% end %>
+   
+  </div>
+  </div>
+  </div>
+

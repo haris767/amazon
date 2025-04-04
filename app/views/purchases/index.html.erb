@@ -1,0 +1,92 @@
+<div class="mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
+<%= render 'shared/profile_sidebar'%>
+<main class="my-8" style="padding-left: 170px;">
+    <div>
+      <h2 class="text-2xl font-semibold leading-7 text-gray-900">purchases & Payments</h2>
+      </div>
+      <!---purchases data show div-------->
+      <div class="flex flex-col">
+      <%#we don't need = in each do when we are in embeded ruby%>
+      <% @purchases.each do |purchases|%>
+      <!---purchases data show inner div-------->
+        <div class="mt-4 lg:mt-0 border border-gray-300 lg:col-span-2 rounded-xl p-6 h-min">
+        <div class="flex items-center">
+  
+   <%= render 'products/mini_product_item', product: purchases.product %>
+          <% if purchases.product.reviews.present? %>
+            <span class=" items-center pointer-events-none block text-sm text-black mt-2">
+              Your rating:
+              <svg class="mx-1"
+               xmlns="http://www.w3.org/2000/svg" 
+               viewBox="0 0 32 32" 
+               aria-hidden="true" 
+               role="presentation" focusable="false" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path>
+              </svg>
+              <%= purchases.review&.final_rating&.round(2) %>
+
+            </span>
+          <% else %>
+            <%= link_to 'Add Review', new_purchase_review_path(purchases), 
+            class:"flex h-10 items-center justify-center rounded-md border bg-primary " %>
+          <% end %>
+          </div> 
+        <div class="relative py-6">
+          <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+        </div>
+        <!----Trip detail div start---->
+          <div>
+          <%# TODO: Convert this into a partial. %>
+          <h3 class="text-xl font-medium text-gray-900">Products details</h3>
+          
+          <div class="flex justify-between font-light mt-6">
+            <p>Quantity</p>
+            <p><%= purchases.quantity %></p>
+            
+          </div>
+          <!----Trip detail div end---->
+        </div>
+        <div class="relative py-6" style="border-bottom:1px solid;">
+          <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+        </div>
+        <!----price detail div---->
+        <div>
+          <%# TODO: Convert this into a partial. %>
+          <h3 class="text-xl font-medium text-gray-900">Price details</h3>
+          <% if purchases.product_payment.present? %>
+          <div class="flex justify-between font-light mt-6">
+            <p><%= humanized_money_with_symbol(purchases.product.price) %> x <%= (purchases.quantity).to_i %>quantity</p>
+            
+          </div>
+        
+        <!----price detail div end---->
+        </div>
+        <div class="relative py-6">
+          <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+        </div>
+        <div class="flex justify-between font-medium">
+          <p>Total After quantity and shipping cost included</p>
+          <p><%= humanized_money_with_symbol(purchases.product_payment.total_price)%></p>
+        </div>
+      </div>
+      <%end%>
+      <!---purchases data show inner div ends here-------->
+      <%end%>
+        
+     </div>
+     <!---purchases data show div end here-------->
+   
+
+
+
+  </main>
+
+  </div>
+ 
+ 

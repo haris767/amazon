@@ -1,0 +1,39 @@
+<div class="amazon-login-container">
+  <div class="amazon-logo">
+   <%= link_to root_path do %>
+           <svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="white"/>
+    <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="black">amazon</text>
+    <path d="M30 55 C50 80, 150 80, 170 55" stroke="orange" stroke-width="5" fill="none"/>
+    <circle cx="170" cy="55" r="4" fill="orange"/>
+</svg>
+
+          <% end %>
+
+  </div>
+  
+  <div class="login-box">
+    <h2>Sign in</h2>
+    
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-group">
+        <%= f.label :email, " email" %><br/>
+        <%= f.email_field :email, class: "form-control", required: true, autofoy: true, style:"border:1px solid" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password %><br/>
+        <%= f.password_field :password, class: "form-control", required: true , style:"border:1px solid"%>
+      </div>
+
+      <%= f.submit "Continue", class: "btn btn-primary btn-block rounded-md" %>
+    <% end %>
+
+    <p>By continuing, you agree to Amazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.</p>
+
+    <hr>
+
+    <p>New to Amazon?</p>
+    <%= link_to "Create your Amazon account", new_user_registration_path, class: "btn btn-secondary btn-block" %>
+  </div>
+</div>

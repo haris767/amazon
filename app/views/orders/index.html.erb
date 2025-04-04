@@ -1,0 +1,7 @@
+<% @orders.each do |order| %>
+  <div>
+    <h3>Order #<%= order.id %></h3>
+    <p>Status: <%= order.status %></p>
+    <p>Tracking: <%= link_to "Track Order", order_path(order) %></p>
+  </div>
+<% end %>

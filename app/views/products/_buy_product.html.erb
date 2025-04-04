@@ -1,0 +1,99 @@
+<div id="product-details" data-product-id="<%= @product.id %>" data-base-price="<%= @product.price %>">
+  <div class="flex justify-between ...">
+    <h3>Buy new:</h3>
+    
+<% if current_user&.prime_member.nil? || current_user&.prime_member == false %>
+   <div class="mt-8 border-t border-gray-300 pt-12" data-turbo="false"> 
+  <%= form_with url: prime_subscriptions_path, method: :post do |form| %>
+    <%= form.submit "Subscribe to Prime",
+     class: "btn btn-primary" %>
+  <% end %>
+  
+</div>
+<% end %>
+    </div>
+  <p class="flex font-semibold text-lg text-black"><span id="product-price"><%= @product.price %></span></p>
+  <p class="flex"><span id="total-price"><%= @product.price %></span></span>&nbsp; Shipping & Import Charges to&nbsp;
+  <span class="delivery_location"><%= "Select a Country" %></span>&nbsp;
+ <button  class="flex items-center gap-1"
+  data-controller="shipping"
+  data-action="click->shipping#toggleShippingModal">
+  Details
+  <svg xmlns="http://www.w3.org/2000/svg"
+       fill="none"
+       viewBox="0 0 24 24"
+       stroke-width="1.5" 
+       stroke="currentColor"
+       class="size-4 text-black">
+    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+  </svg>
+</button>
+
+  </p>
+  <p class="flex text-black">Delivery <span class="font-bold text-black" id="estimated-delivery"><%= @tomorrow_date %></span> Order within  <span class="font-semibold">23 hrs 54 mins</span></p>
+ <button
+  class="flex items-center gap-1"
+  data-controller="delivery"
+  data-action="click->delivery#toggleDeliveryModal"
+>
+  <span class="flex items-center">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      fill="currentColor" 
+      width="12" 
+      height="12">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+    </svg>
+    Deliver to &nbsp;<span class="delivery_location"><%= "Select a Country" %></span>
+
+  </span>
+</button>
+
+<!-- Shipping Cost and Total Price -->
+ <%# <p>Shipping Cost: $<span id="shipping-cost">0</span></p>  %>
+<%# <p>Total Price: $<span id="total-price"><%= @product.price ></span></p> %>
+<div>
+  <label for="quantity">Quantity:</label>
+  <select id="quantity" name="quantity">
+    <% (1..10).each do |q| %>
+      <option value="<%= q %>"><%= q %></option>
+    <% end %>
+  </select>
+     <% if current_user&.prime_eligible? %>
+  <p>Prime User enjoy free shipping </p>
+<% end %>
+</div>
+
+ 
+
+<div>
+ <label for="shipping-method">Shipping Method:</label>
+<select id="shipping-method" name="shipping-method" data-action="change->delivery#updateTotalPrice">
+  <option value="standard">Standard</option>
+  <option value="expedited">Expedited</option>
+  <option value="same_day">Same-Day</option>
+</select>
+</div>
+
+<button
+  data-controller="delivery"
+  data-buy-product-url="<%= update_shipping_path %>"
+  data-product-id="<%= @product.id %>"
+  data-style="<%= @style&.name %>"
+  data-size="<%= @size&.name %>"
+  type="button"
+  data-action="click->delivery#buyProduct"
+  data-delivery-target="cartButton"
+  class="reserve-btn hidden">
+  Add to Cart
+</button>
+
+
+
+
+  <%= render 'shared/modal', modalTriggerId: "delivery", content: 'products/delivery_modal', content_params: {product: @product} %>
+   <%= render 'shared/modal', modalTriggerId: "shipping", content: 'products/shipping_modal', content_params: {product: @product} %>
+</div>
+
+  

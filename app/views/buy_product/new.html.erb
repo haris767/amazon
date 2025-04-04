@@ -1,0 +1,72 @@
+
+    <% if @product.present? %>
+  
+<div class="flex bg-gray-100 p-4">
+  <!-- Left Section: Product Added -->
+  
+  <div class="flex-1 bg-white p-6 rounded-lg shadow-md items-center">
+    
+    <div class="flex items-start space-x-4 " style="width: 100px;">
+      
+       <% if @product.images.attached? %>
+        <% image = @product.images.first %>
+        <img  
+             src="<%= url_for(image) %>" 
+             
+             class="rounded-lg shadow-md" 
+             alt="Product Image">
+      <% end %>
+    
+      <div>
+      
+        <p class="flex items-center space-x-2 text-green-600 font-semibold">
+          ✅ <span>Added to cart</span>
+        </p>
+        <p class="text-gray-600"><span class="font-bold">Color:</span>Green</p>
+        <p class="text-gray-600"><span class="font-bold">Size:</span> <%= @size || "Not selected" %></p>
+        <p class="text-gray-600"><span class="font-bold">Style:</span><%= @style || "Not selected" %></p>
+      </div>
+    </div>
+    
+    <form action="<%= empty_cart_path %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md">Empty Cart</button>
+</form>
+
+  </div>
+
+  <!-- Right Section: Cart Summary -->
+  <div class="w-1/3 bg-white p-6 rounded-lg shadow-md ml-4">
+    <p class="text-lg font-semibold">Cart Subtotal: <span class="text-gray-900"><%= @total_price %></span></p>
+   
+ <div  data-turbo="false"> 
+  
+            <%= form_with url: product_payments_path(
+            product_id: @product.id,
+            quantity:@quantity,
+            total_price:@total_price
+          ), method: :post do |form| %>
+            
+             <!-- Carrier Selection Dropdown -->
+  <label for="carrier_name" class="block text-sm font-medium text-gray-700">Select Carrier</label>
+  <select name="product_payments_params[carrier_name]" id="carrier_name" class="mt-1 block w-full p-2 border rounded-md">
+    <option value="">-- Select a Carrier --</option>
+    <option value="FedEx">FedEx</option>
+    <option value="UPS">UPS</option>
+    <option value="DHL">DHL</option>
+    <option value="USPS">USPS</option>
+  </select>
+
+            <%= form.submit "Proceed to checkout (#{@quantity} item)", 
+              class: "cursor-pointer w-full bg-yellow-400 text-black py-2 rounded-md font-semibold mt-4" %>
+
+          <% end %>
+
+             </div>
+ 
+     
+  </div>
+
+<% else %>
+  <p class="text-gray-600">Your cart is empty.</p>
+<% end %>

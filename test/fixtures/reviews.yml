@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  fivestar_rating: 1
+  fourstar_rating: 1
+  threestar_rating: 1
+  twostar_rating: 1
+  onestar_rating: 1
+  user: one
+  product: one
+
+two:
+  content: MyString
+  fivestar_rating: 1
+  fourstar_rating: 1
+  threestar_rating: 1
+  twostar_rating: 1
+  onestar_rating: 1
+  user: two
+  product: two

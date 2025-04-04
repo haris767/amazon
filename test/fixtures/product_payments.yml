@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total_price_cents: 1
+  total_price_currency: MyString
+  product_price_cents: 1
+  product_price_currency: MyString
+  purchase: one
+
+two:
+  total_price_cents: 1
+  total_price_currency: MyString
+  product_price_cents: 1
+  product_price_currency: MyString
+  purchase: two

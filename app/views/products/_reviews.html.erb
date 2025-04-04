@@ -1,0 +1,54 @@
+ <div class="flex items-center mt-1">
+ <div class="flex text-yellow-500">
+      <button 
+            type="button" 
+            data-controller="reviews"
+            data-action="click->reviews#toggleReviewsModal"
+            data-reviews-product-id-value= "<%= product.id %>"
+            >  
+              <% if product.average_final_rating.present? %>
+              <% full_stars = product.average_final_rating.floor %>
+              <% half_star = (product.average_final_rating.round(2) % 1) >= 0.5 %>
+              <% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %>
+              <% full_stars.times { %><span>&#9733;</span><% } %>
+              <% if half_star %><span>&#9733;&#xFE0E;</span><% end %>
+              <% empty_stars.times { %><span class="text-gray-300">&#9733;</span><% } %>
+              <%end%>
+               <svg xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                 viewBox="0 0 24 24"
+                  stroke-width="1.5" 
+                  stroke="currentColor"
+                   class="size-4 text-black">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+              </button>
+              
+            </div>
+            <span class="text-blue-600 text-sm ml-2"><%= number_with_delimiter(product.reviews_count) %></span>
+            
+            </div>
+          <span class="text-black text-sm ml-2">Ships to <%= (product.country_code) %></span>
+             <div class="flex items-center justify-between mt-3">
+            <span><%= humanized_money_with_symbol(product.price) %></span>
+          </div>
+           
+            <div class="items-center justify-between mt-3">
+             
+            </div>
+
+           
+           <div class="flex items-center justify-between mt-3">
+           
+             </div>
+             <% if product.reviews_count > 0 %>
+             
+           <%= render 'shared/modal',
+             modalTriggerId: "reviews_#{product.id}", # Unique ID for each product
+             content: 'products/reviews_modal', 
+             content_params: { product: product }
+            %>
+
+            
+            <% end %>
+          
